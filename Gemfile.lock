@@ -1,0 +1,74 @@
+GIT
+  remote: https://github.com/pophealth/hqmf2js.git
+  revision: 3376329fb1fa700ff03379f8a13ee0d29e974910
+  branch: develop
+  specs:
+    hqmf2js (1.2.1)
+
+GIT
+  remote: https://github.com/projectcypress/health-data-standards.git
+  revision: a0fa5ae11e95feb3ca1e6279459025fc0ccb05b4
+  branch: develop
+  specs:
+    health-data-standards (3.2.7)
+      activesupport (~> 3.2.9)
+      builder (~> 3.0.0)
+      erubis (~> 2.7.0)
+      log4r (~> 1.1.10)
+      memoist (~> 0.9.0)
+      mongoid (~> 3.1.0)
+      nokogiri (~> 1.5.5)
+      rest-client (~> 1.6.7)
+      rubyzip
+      uuid (~> 2.3.5)
+
+GEM
+  remote: http://rubygems.org/
+  specs:
+    activemodel (3.2.14)
+      activesupport (= 3.2.14)
+      builder (~> 3.0.0)
+    activesupport (3.2.14)
+      i18n (~> 0.6, >= 0.6.4)
+      multi_json (~> 1.0)
+    builder (3.0.4)
+    coderay (1.0.9)
+    erubis (2.7.0)
+    i18n (0.6.5)
+    log4r (1.1.10)
+    macaddr (1.6.1)
+      systemu (~> 2.5.0)
+    memoist (0.9.1)
+    method_source (0.8.2)
+    mime-types (1.24)
+    mongoid (3.1.4)
+      activemodel (~> 3.2)
+      moped (~> 1.4)
+      origin (~> 1.0)
+      tzinfo (~> 0.3.22)
+    moped (1.5.1)
+    multi_json (1.7.9)
+    nokogiri (1.5.10)
+    origin (1.1.0)
+    pry (0.9.12.2)
+      coderay (~> 1.0.5)
+      method_source (~> 0.8)
+      slop (~> 3.4)
+    rake (10.1.0)
+    rest-client (1.6.7)
+      mime-types (>= 1.16)
+    rubyzip (0.9.9)
+    slop (3.4.6)
+    systemu (2.5.2)
+    tzinfo (0.3.37)
+    uuid (2.3.7)
+      macaddr (~> 1.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  health-data-standards!
+  hqmf2js!
+  pry
+  rake
