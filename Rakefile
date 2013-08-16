@@ -1,10 +1,9 @@
 require 'rake'
 require 'rake/testtask'
-require 'sprockets'
-require 'tilt'
 require 'fileutils'
+require 'pry'
 
-require_relative 'lib/hqmf2js'
+require_relative 'lib/profiler'
 
 # Pull in any rake task defined in lib/tasks
 Dir['lib/tasks/*.rake'].sort.each do |ext|
