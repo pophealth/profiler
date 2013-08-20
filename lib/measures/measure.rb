@@ -1,0 +1,3 @@
+class Measure < OpenStruct
+
+end
