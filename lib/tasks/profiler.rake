@@ -151,9 +151,32 @@ namespace :profiler do
     ")
 
 
-    patients = []
+    patients_ep = []
+    patients_eh = []
     Dir.glob(File.join('tmp','bundle','patients','*.json')).each do |patient|
-      patients << "patient = #{File.read(patient)};"
+      patient_json = File.read(patient);
+      patient = JSON.parse(patient_json)
+      binding.pry
+      patients << "patient = #{patient_json};"
+    end
+
+    measures_dir = File.join('tmp','bundle','measures','json')
+    measure_files = Dir.glob(File.join(measures_dir,'**','*.json'))
+
+    sub_ids = ('a'..'zz').to_a
+    measure_files.each do |measure_file| 
+      measure_json = JSON.parse(File.read(measure_file))
+      measure = Measures::Loader.load_hqmf_json(measure_json, nil, nil)
+
+      measure.populations.each_with_index do |population, population_index|
+        sub_id = ''
+        sub_id = sub_ids[population_index] if measure.populations.count > 1
+
+        measure_id = "#{measure.measure_id}#{sub_id}"
+
+
+      end
+
     end
 
 
@@ -169,7 +192,6 @@ namespace :profiler do
       puts "#{measure_js} took #{Time.now.to_f - start}"
 
       results = JSON.parse(@context.eval("JSON.stringify(emitted)"))
-      binding.pry
 
     end
     puts "ALL took #{Time.now.to_f - start_all}"
