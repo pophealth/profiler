@@ -1,6 +1,7 @@
 # Top level include file that brings in all the necessary code
 require 'bundler/setup'
 require 'rubygems'
+require 'yaml'
 
 APP_CONFIG = YAML.load_file(File.join('config', 'measures.yml'))
 
