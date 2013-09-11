@@ -13,7 +13,9 @@ namespace :qme_profiler do
   end
 
   desc 'calculate the measures'
-  task :calculate, [] do |t, args|
+  task :calculate, [:output_diffs] do |t, args|
+
+    output_diffs = (args.output_diffs != 'false')
 
     MONGO_DB['query_cache'].drop
     MONGO_DB['patient_cache'].drop
@@ -44,16 +46,18 @@ namespace :qme_profiler do
     end
 
     checked = 0
-    HealthDataStandards::CQM::PatientCache.all.each do |actual| 
-      checked += 1
-      expected = patient_results["#{actual.value.nqf_id}#{actual.value.sub_id}_#{actual.value.medical_record_id}"]
+    if output_diffs
+      HealthDataStandards::CQM::PatientCache.all.each do |actual| 
+        checked += 1
+        expected = patient_results["#{actual.value.nqf_id}#{actual.value.sub_id}_#{actual.value.medical_record_id}"]
 
-      HQMF::PopulationCriteria::ALL_POPULATION_CODES.each do |pop_code|
-        if (expected[pop_code] != actual.value[pop_code])
-          puts "#{actual.value.nqf_id}#{actual.value.sub_id}: #{actual.value['last']},#{actual.value['first']} (#{pop_code}) => expected: #{expected[pop_code]}, actual: #{actual.value[pop_code]}"
+        HQMF::PopulationCriteria::ALL_POPULATION_CODES.each do |pop_code|
+          if (expected[pop_code] != actual.value[pop_code])
+            puts "#{actual.value.nqf_id}#{actual.value.sub_id}: #{actual.value['last']},#{actual.value['first']} (#{pop_code}) => expected: #{expected[pop_code]}, actual: #{actual.value[pop_code]}"
+          end
         end
-      end
 
+      end
     end
 
 
@@ -140,6 +144,23 @@ namespace :qme_profiler do
 
     end
 
+  end
+
+  desc 'insert patients'
+  task :insert_patients, [:patient_path, :num_copies] do |t, args|
+    MONGO_DB['records'].drop
+    patients_json = File.readlines(args.patient_path)
+    iterations = 1;
+    iterations = args.num_copies.to_i if args.num_copies
+    count = 0
+    (1..iterations).each do |i|
+      patients_json.each do |patient_json|
+        count += 1
+        patient = Record.new(JSON.parse(patient_json))
+        patient.save!
+      end
+    end
+    puts "inserted #{count} patients"
   end
 
 

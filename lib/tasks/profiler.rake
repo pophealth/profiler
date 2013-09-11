@@ -90,13 +90,21 @@ namespace :profiler do
 
     sub_ids = ('a'..'zz').to_a
     index = 0;
+
+    measures = []
     measure_files.each do |measure_file| 
       measure_json = JSON.parse(File.read(measure_file))
-      hqmf_measure = HQMF::Document.from_json(measure_json)
-      measure = Measures::Loader.load_hqmf_json(measure_json, nil, hqmf_measure.all_code_set_oids)
-      measure.as_hqmf_model = hqmf_measure
+      if ['0018','0022','0028','0034','0059','0064','0418','0419','0421'].include? measure_json['id']
+        hqmf_measure = HQMF::Document.from_json(measure_json)
+        measure = Measures::Loader.load_hqmf_json(measure_json, nil, hqmf_measure.all_code_set_oids)
+        measure.as_hqmf_model = hqmf_measure
+        ValueSetHelper.add_value_sets(measure)
+        measures << measure
+      end
+    end
 
-      ValueSetHelper.add_value_sets(measure)
+
+    measures.each do |measure| 
       index += 1
 
       measure.populations.each_with_index do |population, population_index|
@@ -191,6 +199,7 @@ namespace :profiler do
 
     start_all = Time.now.to_i
     checked = 0
+    all_results = {}
     measures.each do |measure|
       measure.populations.each_with_index do |population, population_index|
         sub_id = ''
@@ -202,33 +211,39 @@ namespace :profiler do
 
         start = Time.now.to_f
         patients = patients_by_measure[measure.type]
-#        (1..100).each do |i|
+        (1..100).each do |i|
           @context.eval("emitted=[];")
           patients.each do |patient|
             @context.eval(patient);
             @context.eval(measure_js)
           end
-#        end
+        end
 
         puts "#{measure.type} #{measure_id} on #{patients.size} patients, took #{Time.now.to_f - start}" if show_measure_times
 
         results = JSON.parse(@context.eval("JSON.stringify(emitted)"))
         @context.eval("emitted=[]; hqmfjs={}; ")
-        results.each do |actual|
-          checked += 1
-          expected = patient_results["#{measure_id}_#{actual['medical_record_id']}"]
-
-          HQMF::PopulationCriteria::ALL_POPULATION_CODES.each do |pop_code|
-            if (expected[pop_code] != actual[pop_code])
-              puts "#{measure_id}: #{actual['last']},#{actual['first']} (#{pop_code}) => expected: #{expected[pop_code]}, actual: #{actual[pop_code]}"
-            end
-          end
-        end
+        
+        all_results[measure_id] = results
 
       end
 
     end
     puts "ALL took #{Time.now.to_f - start_all}"
+
+    all_results.each do |measure_id, results| 
+      results.each do |actual|
+        checked += 1
+        expected = patient_results["#{measure_id}_#{actual['medical_record_id']}"]
+
+        HQMF::PopulationCriteria::ALL_POPULATION_CODES.each do |pop_code|
+          if (expected[pop_code] != actual[pop_code])
+            puts "#{measure_id}: #{actual['last']},#{actual['first']} (#{pop_code}) => expected: #{expected[pop_code]}, actual: #{actual[pop_code]}"
+          end
+        end
+      end
+    end
+
     puts "Checked: #{checked}"
 
 
