@@ -186,6 +186,9 @@ namespace :profiler do
       result
     end
 
+    measures = measures.select {|m| ['0018','0022','0028','0034','0059','0064','0418','0419','0421'].include? m.measure_id}
+#    measures = measures.select {|m| m.type == 'ep'}
+
     start_all = Time.now.to_i
     checked = 0
     measures.each do |measure|
@@ -199,11 +202,13 @@ namespace :profiler do
 
         start = Time.now.to_f
         patients = patients_by_measure[measure.type]
-        patients.each do |patient| 
-          @context.eval(patient);
-          @context.eval(measure_js)
-
-        end
+#        (1..100).each do |i|
+          @context.eval("emitted=[];")
+          patients.each do |patient|
+            @context.eval(patient);
+            @context.eval(measure_js)
+          end
+#        end
 
         puts "#{measure.type} #{measure_id} on #{patients.size} patients, took #{Time.now.to_f - start}" if show_measure_times
 

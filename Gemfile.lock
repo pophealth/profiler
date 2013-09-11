@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/pophealth/hqmf2js.git
-  revision: 4b1620fdb53afb77f4ede6fa4196415bc742a306
+  revision: 9d011b14195170e94d2872a7d88626ce508d78b7
   branch: perf
   specs:
     hqmf2js (1.2.1)
@@ -13,51 +13,64 @@ GIT
     hquery-patient-api (1.0.2)
 
 GIT
-  remote: https://github.com/projectcypress/health-data-standards.git
-  revision: a0fa5ae11e95feb3ca1e6279459025fc0ccb05b4
+  remote: https://github.com/pophealth/quality-measure-engine.git
+  revision: c80d64e6d7860c4f080c845cc54fa1bf2c93974e
   branch: develop
   specs:
-    health-data-standards (3.2.7)
-      activesupport (~> 3.2.9)
+    quality-measure-engine (2.5.1)
+      delayed_job_mongoid (~> 2.0.0)
+      mongoid (~> 3.1.4)
+      moped (~> 1.5.1)
+      nokogiri (~> 1.6.0)
+      rubyXL (~> 1.2.10)
+      rubyzip (~> 0.9.9)
+
+GIT
+  remote: https://github.com/projectcypress/health-data-standards.git
+  revision: ebf6020235e9ca9118cd5dfb65228134f97faab0
+  branch: develop
+  specs:
+    health-data-standards (3.2.10)
+      activesupport (~> 3.2.14)
       builder (~> 3.0.0)
       erubis (~> 2.7.0)
       log4r (~> 1.1.10)
-      memoist (~> 0.9.0)
-      mongoid (~> 3.1.0)
-      nokogiri (~> 1.5.5)
+      memoist (~> 0.9.1)
+      mongoid (~> 3.1.4)
+      nokogiri (~> 1.6.0)
       rest-client (~> 1.6.7)
       rubyzip
-      uuid (~> 2.3.5)
+      uuid (~> 2.3.7)
 
 GEM
   remote: http://rubygems.org/
   specs:
-    actionmailer (3.2.11)
-      actionpack (= 3.2.11)
-      mail (~> 2.4.4)
-    actionpack (3.2.11)
-      activemodel (= 3.2.11)
-      activesupport (= 3.2.11)
+    actionmailer (3.2.14)
+      actionpack (= 3.2.14)
+      mail (~> 2.5.4)
+    actionpack (3.2.14)
+      activemodel (= 3.2.14)
+      activesupport (= 3.2.14)
       builder (~> 3.0.0)
       erubis (~> 2.7.0)
       journey (~> 1.0.4)
-      rack (~> 1.4.0)
+      rack (~> 1.4.5)
       rack-cache (~> 1.2)
       rack-test (~> 0.6.1)
       sprockets (~> 2.2.1)
-    activemodel (3.2.11)
-      activesupport (= 3.2.11)
+    activemodel (3.2.14)
+      activesupport (= 3.2.14)
       builder (~> 3.0.0)
-    activerecord (3.2.11)
-      activemodel (= 3.2.11)
-      activesupport (= 3.2.11)
+    activerecord (3.2.14)
+      activemodel (= 3.2.14)
+      activesupport (= 3.2.14)
       arel (~> 3.0.2)
       tzinfo (~> 0.3.29)
-    activeresource (3.2.11)
-      activemodel (= 3.2.11)
-      activesupport (= 3.2.11)
-    activesupport (3.2.11)
-      i18n (~> 0.6)
+    activeresource (3.2.14)
+      activemodel (= 3.2.14)
+      activesupport (= 3.2.14)
+    activesupport (3.2.14)
+      i18n (~> 0.6, >= 0.6.4)
       multi_json (~> 1.0)
     arel (3.0.2)
     builder (3.0.4)
@@ -66,6 +79,11 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.3)
+    delayed_job (3.0.5)
+      activesupport (~> 3.0)
+    delayed_job_mongoid (2.0.0)
+      delayed_job (~> 3.0)
+      mongoid (~> 3.0)
     erubis (2.7.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
@@ -77,13 +95,13 @@ GEM
     log4r (1.1.10)
     macaddr (1.6.1)
       systemu (~> 2.5.0)
-    mail (2.4.4)
-      i18n (>= 0.4.0)
+    mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     memoist (0.9.1)
     method_source (0.8.2)
-    mime-types (1.24)
+    mime-types (1.25)
+    mini_portile (0.5.1)
     mongoid (3.1.4)
       activemodel (~> 3.2)
       moped (~> 1.4)
@@ -91,7 +109,8 @@ GEM
       tzinfo (~> 0.3.22)
     moped (1.5.1)
     multi_json (1.7.9)
-    nokogiri (1.5.10)
+    nokogiri (1.6.0)
+      mini_portile (~> 0.5.0)
     origin (1.1.0)
     polyglot (0.3.3)
     pry (0.9.12.2)
@@ -105,17 +124,17 @@ GEM
       rack
     rack-test (0.6.2)
       rack (>= 1.0)
-    rails (3.2.11)
-      actionmailer (= 3.2.11)
-      actionpack (= 3.2.11)
-      activerecord (= 3.2.11)
-      activeresource (= 3.2.11)
-      activesupport (= 3.2.11)
+    rails (3.2.14)
+      actionmailer (= 3.2.14)
+      actionpack (= 3.2.14)
+      activerecord (= 3.2.14)
+      activeresource (= 3.2.14)
+      activesupport (= 3.2.14)
       bundler (~> 1.0)
-      railties (= 3.2.11)
-    railties (3.2.11)
-      actionpack (= 3.2.11)
-      activesupport (= 3.2.11)
+      railties (= 3.2.14)
+    railties (3.2.14)
+      actionpack (= 3.2.14)
+      activesupport (= 3.2.14)
       rack-ssl (~> 1.3.2)
       rake (>= 0.8.7)
       rdoc (~> 3.4)
@@ -126,6 +145,7 @@ GEM
     ref (1.0.5)
     rest-client (1.6.7)
       mime-types (>= 1.16)
+    rubyXL (1.2.10)
     rubyzip (0.9.9)
     slop (3.4.6)
     sprockets (2.2.2)
@@ -154,8 +174,10 @@ DEPENDENCIES
   health-data-standards!
   hqmf2js!
   hquery-patient-api!
+  mongoid
   pry
-  rails (= 3.2.11)
+  quality-measure-engine!
+  rails (= 3.2.14)
   rake
   sprockets
   therubyracer

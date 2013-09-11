@@ -2,6 +2,9 @@ require 'rake'
 require 'rake/testtask'
 require 'fileutils'
 require 'pry'
+require 'health-data-standards'
+require 'rails'
+require 'health-data-standards/railtie'
 
 require_relative 'lib/profiler'
 
