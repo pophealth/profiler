@@ -209,13 +209,17 @@ namespace :profiler do
 
         measure_js = File.read(File.join('tmp','measures','js',"#{measure_id}.js"))
 
+        # measure_js = "function calculate_#{measure_id}(patient) { \n\n #{measure_js} \n\n}\n"
+        # @context.eval(measure_js)
+
         start = Time.now.to_f
         patients = patients_by_measure[measure.type]
         (1..100).each do |i|
           @context.eval("emitted=[];")
           patients.each do |patient|
-            @context.eval(patient);
+            @context.eval(patient)
             @context.eval(measure_js)
+            # @context.eval("calculate_#{measure_id}(patient);")
           end
         end
 

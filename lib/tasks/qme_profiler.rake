@@ -21,6 +21,7 @@ namespace :qme_profiler do
     MONGO_DB['patient_cache'].drop
     measures = MONGO_DB['measures'].find({}).to_a
     measures = measures.select {|m| ['0018','0022','0028','0034','0059','0064','0418','0419','0421'].include? m['nqf_id']}
+#    measures = measures.select {|m| m['type'] == 'ep' }
     measures.map! {|m| QME::QualityMeasure.new(m['id'], m['sub_id'])}
 
     report_map = {}
@@ -120,9 +121,11 @@ namespace :qme_profiler do
       if ['0018','0022','0028','0034','0059','0064','0418','0419','0421'].include? measure_json['id']
         hqmf_measure = HQMF::Document.from_json(measure_json)
         measure = Measures::Loader.load_hqmf_json(measure_json, nil, hqmf_measure.all_code_set_oids)
+      #if measure.type == 'ep'
         measure.as_hqmf_model = hqmf_measure
         ValueSetHelper.add_value_sets(measure)
         measures << measure
+      #end
       end
     end
 
