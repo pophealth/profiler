@@ -5,7 +5,6 @@ require 'yaml'
 
 APP_CONFIG = YAML.load_file(File.join('config', 'measures.yml'))
 
-require_relative 'measures/calculator.rb'
 require_relative 'measures/loader.rb'
 require_relative 'measures/measure.rb'
 require_relative 'measures/oid_helper.rb'

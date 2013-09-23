@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/pophealth/hqmf2js.git
-  revision: e5d755ae7114fa2cc78f1d2bbc7b7236a1d0f6e8
+  revision: ab2bf380eda00ef13aeba5a8140242ceb062173e
   branch: perf
   specs:
     hqmf2js (1.2.1)
@@ -14,8 +14,8 @@ GIT
 
 GIT
   remote: https://github.com/pophealth/quality-measure-engine.git
-  revision: c80d64e6d7860c4f080c845cc54fa1bf2c93974e
-  branch: develop
+  revision: d9884765147acc7ffff49896ed2078b8b6464d59
+  branch: perf
   specs:
     quality-measure-engine (2.5.1)
       delayed_job_mongoid (~> 2.0.0)

@@ -114,7 +114,7 @@ namespace :profiler do
         measure_id = "#{measure.measure_id}#{sub_id}"
         outfile = File.join(outpath, "#{measure_id}.js")
 
-        js = Measures::Calculator.execution_logic(measure, population_index, true)
+        js = HQMF2JS::Generator::Execution.logic(measure, population_index, true)
 
         File.open(outfile, 'w') {|f| f.write(js) }
         puts "(#{index}/#{measure_files.size}) wrote js for: #{measure_id}"
@@ -136,6 +136,12 @@ namespace :profiler do
     contents = HQMF2JS::Generator::JS.library_functions(APP_CONFIG['check_crosswalk'])
     File.open(hqmf_utils_path, 'w') {|f| f.write(contents) }
     puts "Exported javascript for #{hqmf_utils_path}"
+
+    map_reduce_utils_path = File.join('tmp','bundle','libraries','map_reduce_utils.js')
+    contents = HQMF2JS::Generator::JS.map_reduce_utils
+    File.open(map_reduce_utils_path, 'w') {|f| f.write(contents) }
+    puts "Exported javascript for #{map_reduce_utils_path}"
+
   end
 
   desc 'Calculate Measures'

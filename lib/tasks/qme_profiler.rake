@@ -77,7 +77,7 @@ namespace :qme_profiler do
 
     def library_functions
       library_functions = {}
-      library_functions['map_reduce_utils'] = File.read(File.join('.','tmp','bundle','libraries','map_reduce_utils.js'))
+      library_functions['map_reduce_utils'] = HQMF2JS::Generator::JS.map_reduce_utils
       library_functions['hqmf_utils'] = HQMF2JS::Generator::JS.library_functions
       library_functions
     end    
@@ -90,21 +90,6 @@ namespace :qme_profiler do
     end
 
     refresh_js_libraries
-
-    def measure_js(measure, population_index)
-      "function() {
-        var patient = this;
-        var effective_date = <%= effective_date %>;
-        var enable_logging = <%= enable_logging %>;
-        var enable_rationale = <%= enable_rationale %>;
-
-        hqmfjs = {}
-        <%= init_js_frameworks %>
-        
-        #{Measures::Calculator.execution_logic(measure, population_index)}
-      };
-      "
-    end
 
     measures_dir = File.join('tmp','bundle','measures','json')
     measure_files = Dir.glob(File.join(measures_dir,'**','*.json'))
@@ -136,7 +121,7 @@ namespace :qme_profiler do
         sub_id = ''
         sub_id = sub_ids[population_index] if measure.populations.count > 1
         measure_id = "#{measure.measure_id}#{sub_id}"
-        js = measure_js(measure, population_index)
+        js = HQMF2JS::Generator::Execution.measure_js(measure, population_index)
 
         mongo_measure = mongo_measure_map["#{measure.id}#{sub_id}"]
         mongo_measure.map_fn = js
